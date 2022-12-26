@@ -8,7 +8,7 @@
         <PackageId>X39.Util.DependencyInjection</PackageId>
         <Authors>X39</Authors>
         <Title>X39.Util.DependencyInjection</Title>
-        <PackageDescription>Utility methods and types, useful for everyday programming.</PackageDescription>
+        <PackageDescription>Utility methods and types, useful for dependency injection programming.</PackageDescription>
         <SupportUrl>https://github.com/X39/cs-x39-util-dependencyinjection/issues</SupportUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/X39/cs-x39-util-dependencyinjection</RepositoryUrl>
@@ -28,5 +28,11 @@
         <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
         <PackageReference Include="X39.Util" Version="1.0.0.33" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 </Project>

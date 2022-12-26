@@ -1,4 +1,4 @@
-# X39.Util
+# X39.Util.DependencyInjection
 `X39.Util.DependencyInjection` hosted in the `cs-x39-util-dependencyinjection` repository, is my personal utility library,
 containing commonly used methods and classes regarding dotnet dependency injection.
 
