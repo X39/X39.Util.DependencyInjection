@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net6.0;net7.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <PackageId>X39.Util.DependencyInjection</PackageId>
+        <Authors>X39</Authors>
+        <Title>X39.Util.DependencyInjection</Title>
+        <PackageDescription>Utility methods and types, useful for everyday programming.</PackageDescription>
+        <SupportUrl>https://github.com/X39/cs-x39-util-dependencyinjection/issues</SupportUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/X39/cs-x39-util-dependencyinjection</RepositoryUrl>
+        <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSources>true</IncludeSources>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IsTrimable>true</IsTrimable>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <DefaultLanguage>en-US</DefaultLanguage>
+        <PackageTags>utility;common</PackageTags>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+        <PackageReference Include="X39.Util" Version="1.0.0.33" />
+    </ItemGroup>
+</Project>

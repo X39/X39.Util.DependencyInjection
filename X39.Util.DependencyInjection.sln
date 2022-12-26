@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X39.Util.DependencyInjection", "X39.Util.DependencyInjection\X39.Util.DependencyInjection.csproj", "{A1B6E3F9-23DF-46F3-8BF8-E0D0D8B84508}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F9483691-9E02-41FE-9713-447AB450098D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\main.yml = .github\workflows\main.yml
+		.github\workflows\run-dotnet-tests.yml = .github\workflows\run-dotnet-tests.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "repository", "repository", "{768BAA62-3D75-4AC1-A84C-0813FF0A8B1D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1B6E3F9-23DF-46F3-8BF8-E0D0D8B84508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B6E3F9-23DF-46F3-8BF8-E0D0D8B84508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B6E3F9-23DF-46F3-8BF8-E0D0D8B84508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B6E3F9-23DF-46F3-8BF8-E0D0D8B84508}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
