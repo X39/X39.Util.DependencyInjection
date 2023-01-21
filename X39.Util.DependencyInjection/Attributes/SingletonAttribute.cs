@@ -14,26 +14,34 @@ namespace X39.Util.DependencyInjection.Attributes;using JetBrains.Annotations;
 ///     {
 ///         bool SomeFunc();
 ///     }
-///     [Singleton&lt;MyConditionalService, IMyConditionalService&gt;(ConditionProperty = nameof(IsLoaded))]
+///     [Singleton&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalService : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => true;
-///     #else
-///         private static bool IsLoaded => false;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return true;
+///             #else
+///             return false;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
 ///     }
-///     [Singleton&lt;MyConditionalService, IMyConditionalService&gt;(ConditionProperty = nameof(IsLoaded))]
+///     [Singleton&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalServiceMock : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => false;
-///     #else
-///         private static bool IsLoaded => true;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return false;
+///             #else
+///             return true;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
@@ -41,46 +49,17 @@ namespace X39.Util.DependencyInjection.Attributes;using JetBrains.Annotations;
 /// </code>
 /// </example>
 [PublicAPI]
+[MeansImplicitUse]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-// ReSharper disable once UnusedTypeParameter
 public sealed class SingletonAttribute<TService, TAbstraction> : Attribute, IAbstractedDependencyInjectionAttribute where TService : TAbstraction
 {
-    /// <summary>
-    /// The service type that is implemented with the Singleton.
-    /// </summary>
+    /// <inheritdoc/>
     public Type ServiceType { get; } = typeof(TAbstraction);
 
-    /// <summary>
-    /// An optional method serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
-    /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool SingletonCondition();
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool SingletonCondition();
-    /// </code>
-    /// </example>
-    public string? ConditionMethod { get; set; }
-
-    /// <summary>
-    /// An optional property serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
-    /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool SingletonCondition { get; }
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool SingletonCondition { get; }
-    /// </code>
-    /// </example>
-    public string? ConditionProperty { get; set; }
+    /// <inheritdoc/>
+    public Type ActualType { get; } = typeof(TService);
+    
+    EDependencyInjectionKind IDependencyInjectionAttribute.Kind { get; } = EDependencyInjectionKind.Singleton;
 }
 
 /// <summary>
@@ -104,10 +83,10 @@ public sealed class SingletonAttribute<TService, TAbstraction> : Attribute, IAbs
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public sealed class SingletonAttribute<TService> : Attribute, IDependencyInjectionAttribute
 {
-    /// <summary>
-    /// The service type that is implemented with the Singleton.
-    /// </summary>
+    /// <inheritdoc/>
     public Type ServiceType { get; } = typeof(TService);
+
+    EDependencyInjectionKind IDependencyInjectionAttribute.Kind { get; } = EDependencyInjectionKind.Singleton;
 }
 #endif
 /// <summary>
@@ -122,26 +101,34 @@ public sealed class SingletonAttribute<TService> : Attribute, IDependencyInjecti
 ///     {
 ///         bool SomeFunc();
 ///     }
-///     [Singleton(ServiceType = typeof(IMyConditionalService), ConditionProperty = nameof(IsLoaded))]
+///     [Singleton&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalService : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => true;
-///     #else
-///         private static bool IsLoaded => false;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return true;
+///             #else
+///             return false;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
 ///     }
-///     [Singleton(ServiceType = typeof(IMyConditionalService), ConditionProperty = nameof(IsLoaded))]
+///     [Singleton&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalServiceMock : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => false;
-///     #else
-///         private static bool IsLoaded => true;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return false;
+///             #else
+///             return true;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
@@ -153,42 +140,39 @@ public sealed class SingletonAttribute<TService> : Attribute, IDependencyInjecti
 #if NET7_0_OR_GREATER
 [Obsolete("Use the generic typed version instead")]
 #endif
-public class SingletonAttribute : Attribute
+public class SingletonAttribute : Attribute, IAbstractedDependencyInjectionAttribute
 {
-    /// <summary>
-    /// A service type that is implemented with the Singleton.
-    /// </summary>
-    public Type? ServiceType { get; set; }
+    /// <inheritdoc />
+    public Type ServiceType { get; }
+
+    /// <inheritdoc />
+    public Type ActualType { get; }
 
     /// <summary>
-    /// An optional method serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
+    /// Creates an abstracted singleton service.
     /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool SingletonCondition();
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool SingletonCondition();
-    /// </code>
-    /// </example>
-    public string? ConditionMethod { get; set; }
+    /// <param name="serviceType">
+    ///     <see cref="Type"/> that is supposed to be implemented by the attached class.
+    /// </param>
+    /// <param name="actualType">
+    ///     <see cref="Type"/> of the class this <see cref="Attribute"/> is attached to.
+    /// </param>
+    public SingletonAttribute(Type serviceType, Type actualType)
+    {
+        ServiceType = serviceType;
+        ActualType = actualType;
+    }
 
     /// <summary>
-    /// An optional property serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
+    /// Creates an abstracted singleton service.
     /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool SingletonCondition { get; }
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool SingletonCondition { get; }
-    /// </code>
-    /// </example>
-    public string? ConditionProperty { get; set; }
+    /// <param name="serviceType">
+    ///     <see cref="Type"/> of the class this <see cref="Attribute"/> is attached to.
+    /// </param>
+    public SingletonAttribute(Type serviceType)
+    {
+        ServiceType = serviceType;
+        ActualType = serviceType;
+    }
+    EDependencyInjectionKind IDependencyInjectionAttribute.Kind { get; } = EDependencyInjectionKind.Singleton;
 }

@@ -14,26 +14,34 @@ using JetBrains.Annotations;
 ///     {
 ///         bool SomeFunc();
 ///     }
-///     [Scoped&lt;MyConditionalService, IMyConditionalService&gt;(ConditionProperty = nameof(IsLoaded))]
+///     [Scoped&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalService : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => true;
-///     #else
-///         private static bool IsLoaded => false;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return true;
+///             #else
+///             return false;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
 ///     }
-///     [Scoped&lt;MyConditionalService, IMyConditionalService&gt;(ConditionProperty = nameof(IsLoaded))]
+///     [Scoped&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalServiceMock : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => false;
-///     #else
-///         private static bool IsLoaded => true;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return false;
+///             #else
+///             return true;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
@@ -41,46 +49,17 @@ using JetBrains.Annotations;
 /// </code>
 /// </example>
 [PublicAPI]
+[MeansImplicitUse]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-// ReSharper disable once UnusedTypeParameter
-public sealed class ScopedAttribute<TService, TAbstraction> : Attribute where TService : TAbstraction
+public sealed class ScopedAttribute<TService, TAbstraction>: Attribute, IAbstractedDependencyInjectionAttribute where TService : TAbstraction
 {
-    /// <summary>
-    /// The service type that is implemented with the Scoped.
-    /// </summary>
-    public Type? ServiceType { get; } = typeof(TAbstraction);
+    /// <inheritdoc/>
+    public Type ServiceType { get; } = typeof(TAbstraction);
 
-    /// <summary>
-    /// An optional method serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
-    /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool ScopedCondition();
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool ScopedCondition();
-    /// </code>
-    /// </example>
-    public string? ConditionMethod { get; set; }
-
-    /// <summary>
-    /// An optional property serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
-    /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool ScopedCondition { get; }
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool ScopedCondition { get; }
-    /// </code>
-    /// </example>
-    public string? ConditionProperty { get; set; }
+    /// <inheritdoc/>
+    public Type ActualType { get; } = typeof(TService);
+    
+    EDependencyInjectionKind IDependencyInjectionAttribute.Kind { get; } = EDependencyInjectionKind.Scoped;
 }
 
 /// <summary>
@@ -102,12 +81,12 @@ public sealed class ScopedAttribute<TService, TAbstraction> : Attribute where TS
 /// </example>
 [PublicAPI]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-public sealed class ScopedAttribute<TService> : Attribute
+public sealed class ScopedAttribute<TService> : Attribute, IDependencyInjectionAttribute
 {
-    /// <summary>
-    /// The service type that is implemented with the Scoped.
-    /// </summary>
-    public Type? ServiceType { get; } = typeof(TService);
+    /// <inheritdoc/>
+    public Type ServiceType { get; } = typeof(TService);
+
+    EDependencyInjectionKind IDependencyInjectionAttribute.Kind { get; } = EDependencyInjectionKind.Scoped;
 }
 #endif
 /// <summary>
@@ -122,26 +101,34 @@ public sealed class ScopedAttribute<TService> : Attribute
 ///     {
 ///         bool SomeFunc();
 ///     }
-///     [Scoped(ServiceType = typeof(IMyConditionalService), ConditionProperty = nameof(IsLoaded))]
+///     [Scoped&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalService : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => true;
-///     #else
-///         private static bool IsLoaded => false;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return true;
+///             #else
+///             return false;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
 ///     }
-///     [Scoped(ServiceType = typeof(IMyConditionalService), ConditionProperty = nameof(IsLoaded))]
+///     [Scoped&lt;MyConditionalService, IMyConditionalService&gt;]
 ///     public class MyConditionalServiceMock : IMyConditionalService
 ///     {
-///     #if DEBUG
-///         private static bool IsLoaded => false;
-///     #else
-///         private static bool IsLoaded => true;
-///     #endif
+///         [DependencyInjectionCondition]
+///         private static bool Condition()
+///         {
+///             #if DEBUG
+///             return false;
+///             #else
+///             return true;
+///             #endif
+///         }
 ///         public bool SomeFunc(){
 ///             return true;
 ///         }
@@ -153,42 +140,39 @@ public sealed class ScopedAttribute<TService> : Attribute
 #if NET7_0_OR_GREATER
 [Obsolete("Use the generic typed version instead")]
 #endif
-public class ScopedAttribute : Attribute
+public class ScopedAttribute : Attribute, IAbstractedDependencyInjectionAttribute
 {
-    /// <summary>
-    /// An optional service type that is implemented with the Scoped.
-    /// </summary>
-    public Type? ServiceType { get; set; }
+    /// <inheritdoc />
+    public Type ServiceType { get; }
+
+    /// <inheritdoc />
+    public Type ActualType { get; }
 
     /// <summary>
-    /// An optional method serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
+    /// Creates an abstracted scoped service.
     /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool ScopedCondition();
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool ScopedCondition();
-    /// </code>
-    /// </example>
-    public string? ConditionMethod { get; set; }
+    /// <param name="serviceType">
+    ///     <see cref="Type"/> that is supposed to be implemented by the attached class.
+    /// </param>
+    /// <param name="actualType">
+    ///     <see cref="Type"/> of the class this <see cref="Attribute"/> is attached to.
+    /// </param>
+    public ScopedAttribute(Type serviceType, Type actualType)
+    {
+        ServiceType = serviceType;
+        ActualType = actualType;
+    }
 
     /// <summary>
-    /// An optional property serving as condition for whether the type should be appended or not.
-    /// Must live in the implementing type.
+    /// Creates an abstracted scoped service.
     /// </summary>
-    /// <example>
-    /// <code>
-    ///     public static bool ScopedCondition { get; }
-    /// </code>
-    /// </example>
-    /// <example>
-    /// <code>
-    ///     private static bool ScopedCondition { get; }
-    /// </code>
-    /// </example>
-    public string? ConditionProperty { get; set; }
+    /// <param name="serviceType">
+    ///     <see cref="Type"/> of the class this <see cref="Attribute"/> is attached to.
+    /// </param>
+    public ScopedAttribute(Type serviceType)
+    {
+        ServiceType = serviceType;
+        ActualType = serviceType;
+    }
+    EDependencyInjectionKind IDependencyInjectionAttribute.Kind { get; } = EDependencyInjectionKind.Scoped;
 }
