@@ -80,6 +80,7 @@ public sealed class ScopedAttribute<TService, TAbstraction>: Attribute, IAbstrac
 /// </code>
 /// </example>
 [PublicAPI]
+[MeansImplicitUse]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public sealed class ScopedAttribute<TService> : Attribute, IDependencyInjectionAttribute
 {

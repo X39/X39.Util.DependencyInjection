@@ -80,6 +80,7 @@ public sealed class SingletonAttribute<TService, TAbstraction> : Attribute, IAbs
 /// </code>
 /// </example>
 [PublicAPI]
+[MeansImplicitUse]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public sealed class SingletonAttribute<TService> : Attribute, IDependencyInjectionAttribute
 {

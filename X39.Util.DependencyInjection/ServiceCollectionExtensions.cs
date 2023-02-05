@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using X39.Util.Collections;
 using X39.Util.DependencyInjection.Attributes;
 using X39.Util.DependencyInjection.Exceptions;
 
@@ -63,7 +64,7 @@ public static class ServiceCollectionExtensions
             throw new ServiceTypeIsNotImplementingDecoratedTypeException(type, serviceType);
 
         var conditionMethodInfos = actualType
-            .GetMethods(BindingFlags.Public | BindingFlags.NonPublic)
+            .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
             .Where((mInfo) => mInfo.GetCustomAttribute<DependencyInjectionConditionAttribute>() is not null)
             .ToArray();
         RuntimeHelpers.RunClassConstructor(type.TypeHandle);
@@ -80,7 +81,7 @@ public static class ServiceCollectionExtensions
             {
                 if (methodParameters.Length is not 0 and not 1)
                     throw new ConditionMethodHasInvalidSignatureException(type, methodInfo);
-                if (methodParameters.Any(q => q.ParameterType.IsEquivalentTo(typeof(IConfiguration))))
+                if (methodParameters.None(q => q.ParameterType.IsEquivalentTo(typeof(IConfiguration))))
                     throw new ConditionMethodHasInvalidSignatureException(type, methodInfo);
                 materialize = materialize && (bool) methodInfo.Invoke(null, data ??= new object[] {configuration})!;
                 if (materialize is false)
@@ -158,6 +159,14 @@ public static class ServiceCollectionExtensions
         Assembly assembly)
     {
         AddAbstractAttributedServicesOf(serviceCollection, configuration, assembly);
+        return serviceCollection;
+    }
+    /// <inheritdoc cref="AddAttributedServicesOf(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Reflection.Assembly)"/>
+    public static IServiceCollection AddAttributedServicesFromAssemblyOf<T>(
+        this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
+        AddAbstractAttributedServicesOf(serviceCollection, configuration, typeof(T).Assembly);
         return serviceCollection;
     }
 
