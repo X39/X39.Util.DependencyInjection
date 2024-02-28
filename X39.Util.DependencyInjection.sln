@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "repository", "repository", 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		CONTRIBUTORS.md = CONTRIBUTORS.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWorkerService", "TestWorkerService\TestWorkerService.csproj", "{AEF25BCB-4FF8-4AAB-A818-D2D3D5DF8F11}"
