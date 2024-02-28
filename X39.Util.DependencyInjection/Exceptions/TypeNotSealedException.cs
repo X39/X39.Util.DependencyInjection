@@ -7,6 +7,7 @@ namespace X39.Util.DependencyInjection.Exceptions;
 /// marked as <see langword="sealed"/>.
 /// </summary>
 [PublicAPI]
+[Obsolete("This exception is not used anymore and will be removed in the future.")]
 public class TypeNotSealedException : DependencyInjectionException
 {
     internal TypeNotSealedException(Type type) : base($"The type {type.FullName()} is not sealed.")
