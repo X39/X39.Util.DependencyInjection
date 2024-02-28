@@ -28,4 +28,4 @@ jobs:
       # Change the /p:VERSION=X.X.X part to change the actual package version.
       run: dotnet pack --configuration Release /p:VERSION=2.0.1.${{ github.run_number }} --version-suffix ${{ github.sha }} 
     - name: Upload to NuGet
-      run: dotnet nuget push /home/runner/work/cs-x39-util-dependencyinjection/cs-x39-util-dependencyinjection/X39.Util.DependencyInjection/bin/Release/X39.Util.DependencyInjection.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push /home/runner/work/X39.Util.DependencyInjection/X39.Util.DependencyInjection/X39.Util.DependencyInjection/bin/Release/X39.Util.DependencyInjection.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}

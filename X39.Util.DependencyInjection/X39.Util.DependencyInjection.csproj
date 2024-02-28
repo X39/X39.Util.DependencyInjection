@@ -9,9 +9,9 @@
         <Authors>X39</Authors>
         <Title>X39.Util.DependencyInjection</Title>
         <PackageDescription>Utility methods and types, useful for dependency injection programming.</PackageDescription>
-        <SupportUrl>https://github.com/X39/cs-x39-util-dependencyinjection/issues</SupportUrl>
+        <SupportUrl>https://github.com/X39/X39.Util.DependencyInjection/issues</SupportUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/X39/cs-x39-util-dependencyinjection</RepositoryUrl>
+        <RepositoryUrl>https://github.com/X39/X39.Util.DependencyInjection</RepositoryUrl>
         <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <IncludeSymbols>true</IncludeSymbols>
