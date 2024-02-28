@@ -17,7 +17,7 @@ This library is fully compatible with pre-.NET 7.0.
 However, there is a difference in how the attributes are used, since Net7.0 introduced generic attributes.
 
 The changes pretty much are only in how the attributes have to be written,
-eg. `Singleton(typeof(IService), typeof(Service))` instead of `Singleton<IService, Service>`.
+eg. `Singleton(typeof(Service), typeof(IService))` instead of `Singleton<Service, IService>`.
 
 This readme will only use the generic attributes. The non-generic attributes are working the same way.
 
@@ -33,7 +33,7 @@ serviceCollection.AddAbstractAttributedServicesOf(configuration, assemblyReferen
 ```
 
 ```csharp
-[Singleton<IService, Service>] // This will make the service findable by the AddAbstractAttributedServicesOf method
+[Singleton<Service, IService>] // This will make the service findable by the AddAbstractAttributedServicesOf method
 public class Service : IService
 {
     
@@ -43,40 +43,40 @@ public class Service : IService
 Other than that, you may continue as usual with using dependency injection.
 
 # Attributes
-## `SingletonAttribute<TInterface, [TImplementation]>`
+## `SingletonAttribute<TService, [TAbstraction]>`
 This attribute marks a class as a singleton. When the `AddAbstractAttributedServicesOf` method is called,
 the class will be added to the container as a singleton either as the implementation of the interface.
-Internally this means that for a given `Singleton<IService, Service>`,
-the method `AddSingleton<IService, Service>()` will be called on the service collection.
+Internally this means that for a given `Singleton<TService, TAbstraction>`,
+the method `AddSingleton<TAbstraction, TService>()` will be called on the service collection.
 
-The attribute can be used with either a single type or two types, with the first type always being the "injectable" type
-and the second type being the implementation type. The last type provided always has to be the class attributed with the
-`Singleton` attribute.
+Alternatively, the attribute can be used without the `TAbstraction` parameter, 
+in which case the class will be added as a singleton without an interface
+(`AddSingleton<TService>()` for a given `Singleton<TService>`).
 
 *Note that the XML documentation of the attributed class contains samples of how to use the attribute.*
 
-## `TransientAttribute<TInterface, [TImplementation]>`
+## `TransientAttribute<TService, [TAbstraction]>`
 This attribute marks a class as a transient. When the `AddAbstractAttributedServicesOf` method is called,
 the class will be added to the container as a transient either as the implementation of the interface.
-Internally this means that for a given `Transient<IService, Service>`,
-the method `AddTransient<IService, Service>()` will be called on the service collection.
-    
-The attribute can be used with either a single type or two types, with the first type always being the "injectable" type
-and the second type being the implementation type. The last type provided always has to be the class attributed with the
-`Transient` attribute.
-    
+Internally this means that for a given `Transient<TService, TAbstraction>`,
+the method `AddTransient<TAbstraction, TService>()` will be called on the service collection.
+
+Alternatively, the attribute can be used without the `TAbstraction` parameter,
+in which case the class will be added as a transient without an interface
+(`AddTransient<TService>()` for a given `Transient<TService>`).
+
 *Note that the XML documentation of the attributed class contains samples of how to use the attribute.*
 
-## `ScopedAttribute<TInterface, [TImplementation]>`
+## `ScopedAttribute<TService, [TAbstraction]>`
 This attribute marks a class as a scoped
 When the `AddAbstractAttributedServicesOf` method is called,
 the class will be added to the container as a scoped either as the implementation of the interface.
-Internally this means that for a given `Scoped<IService, Service>`,
-the method `AddScoped<IService, Service>()` will be called on the service collection.
-    
-The attribute can be used with either a single type or two types, with the first type always being the "injectable" type
-and the second type being the implementation type. The last type provided always has to be the class attributed with the
-`Scoped` attribute.
+Internally this means that for a given `Scoped<TService, TAbstraction>`,
+the method `AddScoped<TAbstraction, TService>()` will be called on the service collection.
+
+Alternatively, the attribute can be used without the `TAbstraction` parameter,
+in which case the class will be added as a scoped without an interface
+(`AddScoped<TService>()` for a given `Scoped<TService>`).
 
 *Note that the XML documentation of the attributed class contains samples of how to use the attribute.*
 
