@@ -23,6 +23,7 @@
         <PackageTags>utility;common</PackageTags>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Deterministic>true</Deterministic>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
