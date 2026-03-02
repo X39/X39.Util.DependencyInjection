@@ -8,15 +8,11 @@ jobs:
   upload-to-npgk:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.0.x
-    - name: Setup NuGet.exe for use with actions
-      uses: NuGet/setup-nuget@v1.0.5
-      with:
-        nuget-version: latest
+        dotnet-version: 10.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -26,6 +22,6 @@ jobs:
     - name: Pack
       # CHANGE PACKAGE VERSION - The retarded way
       # Change the /p:VERSION=X.X.X part to change the actual package version.
-      run: dotnet pack --configuration Release /p:VERSION=2.0.1.${{ github.run_number }} --version-suffix ${{ github.sha }} 
+      run: dotnet pack --configuration Release /p:VERSION=3.0.0.${{ github.run_number }} --version-suffix ${{ github.sha }}
     - name: Upload to NuGet
-      run: dotnet nuget push /home/runner/work/X39.Util.DependencyInjection/X39.Util.DependencyInjection/X39.Util.DependencyInjection/bin/Release/X39.Util.DependencyInjection.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push sources/X39.Util.DependencyInjection/bin/Release/X39.Util.DependencyInjection.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
