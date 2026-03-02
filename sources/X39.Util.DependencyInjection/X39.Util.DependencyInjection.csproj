@@ -8,7 +8,7 @@
         <PackageId>X39.Util.DependencyInjection</PackageId>
         <Authors>X39</Authors>
         <Title>X39.Util.DependencyInjection</Title>
-        <PackageDescription>Utility methods and types, useful for dependency injection programming.</PackageDescription>
+        <PackageDescription>Attribute-based service registration for Microsoft.Extensions.DependencyInjection with a compile-time source generator. Decorate classes with [Singleton], [Transient], or [Scoped] attributes and registrations are generated at build time — no runtime reflection required. Supports conditional registration, NativeAOT, and trimming.</PackageDescription>
         <SupportUrl>https://github.com/X39/X39.Util.DependencyInjection/issues</SupportUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/X39/X39.Util.DependencyInjection</RepositoryUrl>
@@ -20,7 +20,7 @@
         <IsTrimable>true</IsTrimable>
         <NeutralLanguage>en-US</NeutralLanguage>
         <DefaultLanguage>en-US</DefaultLanguage>
-        <PackageTags>utility;common</PackageTags>
+        <PackageTags>dependency-injection;di;source-generator;roslyn;attributes;ioc;nativeaot;trimming</PackageTags>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <Deterministic>true</Deterministic>
