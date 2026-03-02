@@ -10,9 +10,11 @@
     <File Path=".github/workflows/run-dotnet-tests.yml" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/TestWorkerService/TestWorkerService.csproj" />
+    <Project Path="tests/X39.Util.DependencyInjection.Generator.Tests/X39.Util.DependencyInjection.Generator.Tests.csproj" />
+    <Project Path="tests/X39.Util.DependencyInjection.Tests/X39.Util.DependencyInjection.Tests.csproj" />
   </Folder>
   <Folder Name="/sources/">
     <Project Path="sources/X39.Util.DependencyInjection/X39.Util.DependencyInjection.csproj" />
+    <Project Path="sources/X39.Util.DependencyInjection.Generator/X39.Util.DependencyInjection.Generator.csproj" />
   </Folder>
 </Solution>

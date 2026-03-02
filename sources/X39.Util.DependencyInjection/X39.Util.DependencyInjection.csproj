@@ -37,4 +37,23 @@
             <PackagePath>\</PackagePath>
         </None>
     </ItemGroup>
+
+    <!-- Build the generator project (for packaging), but do NOT run it as an analyzer on this library -->
+    <ItemGroup>
+        <ProjectReference Include="..\X39.Util.DependencyInjection.Generator\X39.Util.DependencyInjection.Generator.csproj"
+                          ReferenceOutputAssembly="false"
+                          PrivateAssets="all" />
+    </ItemGroup>
+
+    <!-- Pack .props for MSBuild property forwarding -->
+    <ItemGroup>
+        <None Include="build\X39.Util.DependencyInjection.props" Pack="true" PackagePath="build\" />
+        <None Include="build\X39.Util.DependencyInjection.props" Pack="true" PackagePath="buildTransitive\" />
+    </ItemGroup>
+
+    <!-- Pack the generator DLL into analyzers/ -->
+    <ItemGroup>
+        <None Include="..\X39.Util.DependencyInjection.Generator\bin\$(Configuration)\netstandard2.0\X39.Util.DependencyInjection.Generator.dll"
+              Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
 </Project>

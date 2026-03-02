@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <X39_DependencyInjection_ClassName
+      Condition="'$(X39_DependencyInjection_ClassName)' == ''">Dependencies</X39_DependencyInjection_ClassName>
+    <X39_DependencyInjection_Namespace
+      Condition="'$(X39_DependencyInjection_Namespace)' == ''">X39.Util.DependencyInjection</X39_DependencyInjection_Namespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="X39_DependencyInjection_ClassName" />
+    <CompilerVisibleProperty Include="X39_DependencyInjection_Namespace" />
+  </ItemGroup>
+</Project>
