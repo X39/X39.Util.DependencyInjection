@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/files/">
+    <File Path=".gitignore" />
+    <File Path="CONTRIBUTORS.md" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/files/cicd/">
+    <File Path=".github/workflows/main.yml" />
+    <File Path=".github/workflows/run-dotnet-tests.yml" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TestWorkerService/TestWorkerService.csproj" />
+  </Folder>
+  <Folder Name="/sources/">
+    <Project Path="sources/X39.Util.DependencyInjection/X39.Util.DependencyInjection.csproj" />
+  </Folder>
+</Solution>

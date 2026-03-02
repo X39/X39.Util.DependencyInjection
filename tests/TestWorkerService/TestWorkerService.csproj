@@ -12,6 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\X39.Util.DependencyInjection\X39.Util.DependencyInjection.csproj" />
+      <ProjectReference Include="..\..\sources\X39.Util.DependencyInjection\X39.Util.DependencyInjection.csproj" />
     </ItemGroup>
 </Project>
